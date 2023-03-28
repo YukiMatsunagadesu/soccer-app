@@ -1,0 +1,19 @@
+.container{
+  text-align: center;
+}
+.index{
+  text-decoration: none;
+  color: black;
+  border: 1px solid black;
+  padding: 4px;
+  border-radius: 4px;
+  margin: 4px 8px;
+}
+.about{
+  text-decoration: none;
+  color: black;
+  border: 1px solid black;
+  padding: 4px;
+  border-radius: 4px;
+  margin: 4px 8px;
+}

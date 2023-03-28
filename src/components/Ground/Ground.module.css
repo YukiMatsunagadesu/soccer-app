@@ -1,0 +1,38 @@
+.groundcontainer {
+  background-color: rgb(16, 20, 16);
+  color: white;
+}
+.header {
+  padding: 24px;
+  background-color: rgb(115, 232, 72);
+}
+.teamselect {
+  display: flex;
+  background-color: rgb(62, 201, 104);
+  padding: 16px;
+  margin: 24px;
+}
+.teamselect .select {
+  padding: 8px;
+  margin-left: 32px;
+  border-radius: 24px;
+}
+.gamezone {
+  display: flex;
+  align-items: center;
+}
+.gamezone .canvas {
+  display: block;
+  margin: 64px;
+  background-color: rgb(45, 86, 66);
+}
+.gamezone .player {
+  height: 600px;
+  width: 400px;
+  margin: 24px;
+  padding: 8px;
+  background-color: rgba(142, 40, 40, 0.484);
+}
+.footer {
+  background-color: rgb(255, 0, 238);
+}/*# sourceMappingURL=style.css.map */
