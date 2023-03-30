@@ -14,9 +14,9 @@ export default function Ground() {
     setSelectedTeam(teamName);
   }
   useEffect(() => {
-    function draw() {
+      function draw() {
       const canvas = canvasRef.current;
-      if (!canvas) return;
+      if (!canvas) return
       const ctx = canvas.getContext('2d');
 
       // タッチライン
@@ -65,6 +65,7 @@ export default function Ground() {
     }
   };
   
+  //チームのデータをfetchする処理
   const fetcher = async (url) => {
     const response = await fetch(url, options);
     const data = await response.json();
@@ -76,16 +77,31 @@ export default function Ground() {
       throw new Error(data.message);
     }
   };
-  const { data, error } = useSWR('https://api-football-v1.p.rapidapi.com/v3/teams?league=39&season=2022', fetcher);
+  const { data:teams, error} = useSWR('https://api-football-v1.p.rapidapi.com/v3/teams?league=39&season=2022', fetcher);
+
+  //チームの選手をとってくる処理
+  const fetcher2 = async (url) => {
+    const response = await fetch(url, options);
+    const data = await response.json();
+  
+    if (response.ok) {
+      console.log(data);
+      return data;
+    } else {
+      throw new Error(data.message);
+    }
+  };
+  const { data:manu_members, memberserror} = useSWR('https://api-football-v1.p.rapidapi.com/v3/players?team=33&league=39&season=2022&page=1', fetcher2);
   
 
   if(error){
     return <div>ローディングに失敗しました</div>
   }
-  if(!data){
+  if(!teams){
     return <div>loading...</div>
   }
-  console.log(data);
+  console.log(teams);
+  console.log(manu_members);
   return(
     <div className={styles.ground_container}>
       <div className={styles.header}>
@@ -96,39 +112,57 @@ export default function Ground() {
           チーム選択画面
           <select className={styles.select} onChange={handleTeamSelect}>
             <option value="">チームを選択してください</option>
-            <option value="マンチェスター・シティ">マンチェスター・シティ</option>
-            <option value="リバプール">リバプール</option>
-            <option value="チェルシー">チェルシー</option>
-            <option value="トッテナム・ホットスパー">トッテナム・ホットスパー</option>
-            <option value="アーセナル">アーセナル </option>
-            <option value="マンチェスター・ユナイテッド">マンチェスター・ユナイテッド</option>
-            <option value="ウェストハム・ユナイテッド">ウェストハム・ユナイテッド</option>
-            <option value="レスター・シティ">レスター・シティ</option>
-            <option value="ブライトン">ブライトン</option>
-            <option value="ウォルバーハンプトン">ウォルバーハンプトン</option>
-            <option value="ニューカッスル・ユナイテッド">ニューカッスル・ユナイテッド</option>
-            <option value="クリスタル・パレス">クリスタル・パレス</option>
-            <option value="ブレントフォード">ブレントフォード</option>
-            <option value="アストン・ビラ">アストン・ビラ</option>
-            <option value="サウサンプトン">サウサンプトン</option>
-            <option value="エバートン">エバートン</option>
-            <option value="リーズ・ユナイテッド">リーズ・ユナイテッド</option>
-            <option value="フラム">フラム</option>
-            <option value="ボーンマス">ボーンマス</option>
-            <option value="ノッティンガム・フォレスト">ノッティンガム・フォレスト</option>
+            <option value="Manchester City">マンチェスター・シティ</option>
+            <option value="Liverpool">リバプール</option>
+            <option value="Chelsea">チェルシー</option>
+            <option value="Tottenham">トッテナム・ホットスパー</option>
+            <option value="Arsenal">アーセナル </option>
+            <option value="Manchester United">マンチェスター・ユナイテッド</option>
+            <option value="West Ham">ウェストハム・ユナイテッド</option>
+            <option value="Leicester">レスター・シティ</option>
+            <option value="Brighton">ブライトン</option>
+            <option value="Wolves">ウォルバーハンプトン</option>
+            <option value="Newcastle">ニューカッスル・ユナイテッド</option>
+            <option value="Crystal Palace">クリスタル・パレス</option>
+            <option value="Brentford">ブレントフォード</option>
+            <option value="Aston Villa">アストン・ビラ</option>
+            <option value="Southampton">サウサンプトン</option>
+            <option value="Everton">エバートン</option>
+            <option value="Leeds">リーズ・ユナイテッド</option>
+            <option value="Fulham">フラム</option>
+            <option value="Bournemouth">ボーンマス</option>
+            <option value="Nottingham Forest">ノッティンガム・フォレスト</option>
           </select>
-          <div>選ばれたチームは{selectedTeam}</div>
+          <div className={styles.selected_team_name}>選ばれたチームは{selectedTeam}</div>
         </div>
         <div className={styles.gamezone}>
           <canvas ref={canvasRef} width="600" height="600" className={styles.canvas}> サポートされていません</canvas>
-          <div className={styles.player}>ここに選手一覧が入ります</div>
+          <div className={styles.player_container}>
+            ここに{selectedTeam}の選手一覧が入りますよ
+            {selectedTeam === "Manchester United" && (
+            <>
+              {manu_members.response.map((member) => (
+                <div key={member.player.id} className={styles.playerlist}>
+                  <p>{member.player.name}</p>
+                  <img src={member.player.photo} alt={member.player.photo} height="50" width="50"/>
+                </div>
+              ))}
+            </>
+          )}
+
+          </div>
         </div>
         <div>
-          {data.response.map((team) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={team.team.logo} alt={team.team.name} key={team.team.id}  height="120" width="120"/>
-          ))}
+          <div className={styles.team_logos}>
+            {teams.response.map((team) => (
+              <div className={styles.team_logo} key={team.team.id}>
+                <img src={team.team.logo} alt={team.team.name} height="120" width="120"/>
+                <p>{team.team.name}</p>
+              </div>
+            ))}
+          </div>
         </div>
+
       </main>
       <div className={styles.footer}>
         ここがフッターです

@@ -8,6 +8,7 @@
 }
 .teamselect {
   display: flex;
+  align-items: center;
   background-color: rgb(62, 201, 104);
   padding: 16px;
   margin: 24px;
@@ -16,6 +17,10 @@
   padding: 8px;
   margin-left: 32px;
   border-radius: 24px;
+}
+
+.selected_team_name{
+  margin-left: 16px;
 }
 .gamezone {
   display: flex;
@@ -26,12 +31,27 @@
   margin: 64px;
   background-color: rgb(45, 86, 66);
 }
-.gamezone .player {
+.gamezone .player_container {
   height: 600px;
-  width: 400px;
   margin: 24px;
   padding: 8px;
   background-color: rgba(142, 40, 40, 0.484);
+  text-align: center;
+  overflow: scroll;
+}
+.playerlist{
+
+}
+.team_logos{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.team_logo{
+  margin: 8px 16px;
+  /* border: 1px solid black; */
+  text-align: center;
+
 }
 .footer {
   background-color: rgb(255, 0, 238);
