@@ -105,7 +105,7 @@ export default function Ground() {
   return(
     <div className={styles.ground_container}>
       <div className={styles.header}>
-        <p>俺のプレミアベストイレブン（22~23シーズン）</p>
+        <p className='text-blue-500'>俺のプレミアベストイレブン（22~23シーズン）</p>
       </div>
       <main>
         <div className ={styles.teamselect}>
