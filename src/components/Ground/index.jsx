@@ -64,7 +64,8 @@ export default function Ground() {
       'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
     }
   };
-  
+
+
   //チームのデータをfetchする処理
   const fetcher = async (url) => {
     const response = await fetch(url, options);
