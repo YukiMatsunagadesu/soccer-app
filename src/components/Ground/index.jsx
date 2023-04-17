@@ -57,13 +57,15 @@ export default function Ground() {
     draw();
   }, []);
 
+
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': '2a494d226amshef23cfde37008f5p1884f8jsnfb9235316ae6',
+      'X-RapidAPI-Key': process.env.NEXT_PUBLIC_API_KEY,
       'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
     }
   };
+
 
 
   //チームのデータをfetchする処理
